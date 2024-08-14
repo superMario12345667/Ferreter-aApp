@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="/layouts/_mainLayout">
+
+<div layout:fragment="content">
+    <h1>Lista de Ventas</h1>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Nombre</th>
+            <th>Descripción</th>
+            <th>Precio</th>
+            <th>Cantidad</th>
+            <th>Total</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="venta : ${ventas}">
+            <td th:text="${venta.id}">ID</td>
+            <td th:text="${venta.nombre}">Nombre</td>
+            <td th:text="${venta.descripcion}">Descripción</td>
+            <td th:text="${venta.precio}">Precio</td>
+            <td th:text="${venta.cantidad}">Cantidad</td>
+            <td th:text="${venta.total}">Total</td>
+        </tr>
+        </tbody>
+    </table>
+    <a class="btn btn-primary" href="/ventas/create">Nueva Venta</a>
+</div>
