@@ -15,6 +15,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.jar.Attributes;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -63,4 +64,27 @@ public class ProductoController {
     model.addAttribute("producto", producto);
     return "producto/details";
     }
+
+    @GetMapping("/edit/{id}")
+    public String edit(@PathVariable("id") Integer id, Model model){
+    Producto producto = productoService.buscarPorId(id).get();
+    model.addAttribute("producto", producto );
+    return "producto/edit";
+    }
+
+    @GetMapping("/remove/{id}")
+    public String remove(@PathVariable("id") Integer id, Model model) {
+        Producto producto = productoService.buscarPorId(id).get();
+        model.addAttribute("producto", producto);
+        return "producto/delete";
+    }
+
+    @PostMapping("/delete")
+    public String delete(Producto producto, RedirectAttributes attributes) {
+        productoService.eliminarPorId(producto.getId());
+        attributes.addAttribute("msg", "Grupo eliminado correctamente");
+        return "redirect:/productos";
+    }
+
+
 }
