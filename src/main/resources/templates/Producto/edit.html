@@ -1,0 +1,62 @@
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="/layouts/_mainLayout">
+<body>
+<div layout:fragment="content">
+
+    <h1>Editar Producto</h1>
+
+    <form th:action="@{/productos/save}" th:object="${producto}" method="post">
+        <input type="hidden" th:field="*{id}">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="nombre">Nombre</label>
+                    <input type="text" class="form-control" th:field="*{nombre}" id="nombre" placeholder="Escriba el nombre del producto" required>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="descripcion">Descripción</label>
+                    <textarea class="form-control" th:field="*{descripcion}" id="descripcion" cols="12" rows="3"  required></textarea>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="precio">Precio</label>
+                    <input type="text" class="form-control" th:field="*{precio}" id="precio">
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="stock">Stock</label>
+                    <input type="text" class="form-control" th:field="*{stock}" id="stock">
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="idCategoria">ID Categoría</label>
+                    <input type="text" class="form-control" th:field="*{idCategoria}" id="idCategoria">
+                </div>
+            </div>
+        </div>
+
+        <hr>
+        <button type="submit" class="btn btn-primary">Guardar cambios</button>
+        <a th:href="@{/productos}">Regresar</a>
+    </form>
+</div>
+</body>
