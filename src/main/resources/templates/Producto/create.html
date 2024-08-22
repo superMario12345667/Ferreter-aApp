@@ -1,61 +1,206 @@
 <html lang="en"
       xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:layout="http://www.thymeleaf.org/layout"
       layout:decorate="/layouts/_mainLayout">
-<body>
+
+<head>
+    <!-- Incluir el CSS de Cropper -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.css" />
+    <!-- Incluir el CSS de Bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        /* Estilos personalizados */
+        #cropContainer {
+            display: flex;
+            align-items: center;
+            max-height: 350px;
+            border: 1px solid #ddd;
+            padding: 10px;
+            background-color: #f9f9f9;
+            border-radius: 5px;
+        }
+        #image {
+            max-width: 100%;
+            max-height: 100%;
+            border-radius: 5px;
+        }
+        .crop-button-container {
+            margin-left: 15px;
+            display: flex;
+            align-items: center;
+        }
+        .form-group label {
+            font-weight: bold;
+        }
+        .form-control {
+            border-radius: 5px;
+        }
+        .btn-success {
+            border-radius: 5px;
+        }
+        .btn-primary {
+            border-radius: 5px;
+        }
+        .btn-secondary {
+            border-radius: 5px;
+        }
+        .btn {
+            margin-right: 5px;
+        }
+    </style>
+</head>
+
 <div layout:fragment="content">
-    <h1>Crear nuevo Producto</h1>
+    <div class="container" >
+    <div class="row" >
+        <div class= "col-md-6">
+        <h1 class="mb-4">Crear nuevo Producto</h1>
 
-    <form th:action="@{/productos/save}" th:object="${producto}" method="post">
-        <div class="row">
-            <div class="col-md-6">
-                <div class="form-group">
-                    <label for="nombre">Nombre</label>
-                    <input type="text" class="form-control" th:field="*{nombre}" id="nombre" placeholder="Escriba el nombre del producto" required>
+        <form th:action="@{/productos/save}" th:object="${producto}" method="post" enctype="multipart/form-data">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label for="nombre">Nombre</label>
+                        <input type="text" class="form-control" th:field="*{nombre}" id="nombre" placeholder="Escriba el nombre del producto" required>
+                    </div>
                 </div>
             </div>
-        </div>
 
-        <div class="row">
-            <div class="col-md-6">
-                <div class="form-group">
-                    <label for="descripcion">Descripción</label>
-                    <textarea class="form-control" th:field="*{descripcion}" id="descripcion" cols="12" rows="3"  required></textarea>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label for="descripcion">Descripción</label>
+                        <textarea class="form-control" th:field="*{descripcion}" id="descripcion" cols="12" rows="3" required></textarea>
+                    </div>
                 </div>
             </div>
-        </div>
 
-        <div class="row">
-            <div class="col-md-6">
-                <div class="form-group">
-                    <label for="precio">Precio</label>
-                    <input type="text" class="form-control" th:field="*{precio}" id="precio">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label for="precio">Precio</label>
+                        <input type="number" class="form-control" th:field="*{precio}" id="precio" step="0.01">
+                    </div>
                 </div>
             </div>
-        </div>
 
-        <div class="row">
-            <div class="col-md-6">
-                <div class="form-group">
-                    <label for="stock">Stock</label>
-                    <input type="text" class="form-control" th:field="*{stock}" id="stock">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label for="stock">Stock</label>
+                        <input type="number" class="form-control" th:field="*{stock}" id="stock" min="0">
+                    </div>
                 </div>
             </div>
-        </div>
 
-        <div class="row">
-            <div class="col-md-6">
-                <div class="form-group">
-                    <label for="idCategoria">ID Categoría</label>
-                    <input type="text" class="form-control" th:field="*{idCategoria}" id="idCategoria">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label for="idCategoria">Categoría</label>
+                        <select class="form-control" th:field="*{idCategoria}" id="idCategoria">
+                            <option th:each="categoria : ${categorias}"
+                                    th:value="${categoria.id}"
+                                    th:text="${categoria.nombre}">Categoría</option>
+                        </select>
+                    </div>
                 </div>
             </div>
-        </div>
 
-        <hr>
-        <button type="submit" class="btn btn-primary">Guardar</button>
-        <a th:href="@{/productos}">Regresar</a>
-    </form>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label for="imagen">Imagen</label>
+                        <input type="file" class="form-control" id="imagen" name="imagen" accept="image/*" required>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-12">
+                <div class="form-group">
+                    <div id="cropContainer" style="display: none; max-height:350px;">
+                        <img id="image" src="" alt="Imagen a recortar">
+                    </div>
+                    <br>
+                    <button type="button" id="cropButton" class="btn btn-success" style="display: none;" >Recortar Imagen</button>
+                </div>
+            </div>
+
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div id="cropContainer" style="display: none;">
+                        <img id="image" src="" alt="Imagen a recortar">
+                        <div class="crop-button-container">
+                            <button type="button" id="cropButton" class="btn btn-success" style="display: none;">Recortar imagen</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <hr>
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary">Guardar</button>
+                <a th:href="@{/productos}" class="btn btn-secondary">Regresar</a>
+            </div>
+        </form>
+    </div>
+
+    <!-- Incluir el JS de Cropper -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.js"></script>
+    <!-- Incluir el JS de Bootstrap -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            var image = document.getElementById('image');
+            var cropContainer = document.getElementById('cropContainer');
+            var photoInput = document.getElementById('imagen');
+            var cropButton = document.getElementById('cropButton');
+            var cropper;
+
+            photoInput.addEventListener('change', function(event) {
+                var files = event.target.files;
+                if (files && files.length > 0) {
+                    var reader = new FileReader();
+                    reader.onload = function(event) {
+                        image.src = event.target.result;
+                        cropContainer.style.display = "flex";
+                        cropButton.style.display = "block";
+                        if (cropper) {
+                            cropper.destroy();
+                        }
+                        cropper = new Cropper(image, {
+                            aspectRatio: 1,
+                            viewMode: 1
+                        });
+                    };
+                    reader.readAsDataURL(files[0]);
+                }
+            });
+
+            cropButton.addEventListener('click', function() {
+                if (!cropper) {
+                    alert("Por favor, selecciona una imagen primero.");
+                    return;
+                }
+
+                var croppedCanvas = cropper.getCroppedCanvas();
+                if (croppedCanvas) {
+                    croppedCanvas.toBlob(function(blob) {
+                        var file = new File([blob], 'cropped.jpg', { type: 'image/jpeg' });
+                        var dataTransfer = new DataTransfer();
+                        dataTransfer.items.add(file);
+                        photoInput.files = dataTransfer.files;
+                    });
+                } else {
+                    alert("Error al recortar la imagen.");
+                }
+            });
+        });
+    </script>
 </div>
-</body>
-</html>
+    </div>
+</div>
