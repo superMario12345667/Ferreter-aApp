@@ -1,0 +1,53 @@
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="/layouts/_mainLayout">
+<body>
+<div layout:fragment="content">
+    <div class="card" style="max-width: 600px; margin: 0 auto; margin-top: 30px;">
+        <div class="card-body">
+            <h1 class="card-title text-center">Editar Producto</h1>
+            <form th:action="@{/productos/save}" th:object="${producto}" method="post" >
+                <input type="hidden" th:field="*{id}">
+
+                <div class="form-group">
+                    <label for="nombre">Nombre</label>
+                    <input type="text" class="form-control" th:field="*{nombre}" id="nombre" placeholder="Escriba el nombre del producto" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="descripcion">Descripción</label>
+                    <textarea class="form-control" th:field="*{descripcion}" id="descripcion" cols="12" rows="3" required></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="precio">Precio</label>
+                    <input type="text" class="form-control" th:field="*{precio}" id="precio">
+                </div>
+
+                <div class="form-group">
+                    <label for="stock">Stock</label>
+                    <input type="text" class="form-control" th:field="*{stock}" id="stock">
+                </div>
+
+                <div class="form-group">
+                    <label for="idCategoria">Categoría</label>
+                    <select class="form-control" th:field="*{idCategoria}" id="idCategoria">
+                        <option th:each="categoria : ${categorias}"
+                                th:value="${categoria.id}"
+                                th:text="${categoria.nombre}"
+                                th:selected="${producto.idCategoria == categoria.id}">Categoría</option>
+                    </select>
+                </div>
+
+                <hr>
+                <div class="text-center">
+                    <button type="submit" class="btn btn-primary">Guardar cambios</button>
+                    <a th:href="@{/productos}" class="btn btn-secondary">Regresar</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,43 @@
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="/layouts/_mainLayout">
+<body>
+<div layout:fragment="content">
+    <div class="card" style="max-width: 500px; margin: 0 auto; margin-top: 20px;">
+        <div class="card-body">
+            <h1 class="card-title text-center">Eliminar Grupo</h1>
+            <hr />
+            <dl class="row">
+                <dt class="col-sm-4">ID</dt>
+                <dd class="col-sm-8">
+                    <div class="form-control" readonly th:text="${categoria.id}"></div>
+                </dd>
+
+                <dt class="col-sm-4">Nombre</dt>
+                <dd class="col-sm-8">
+                    <div class="form-control" readonly th:text="${categoria.nombre}"></div>
+                </dd>
+
+                <dt class="col-sm-4">Descripción</dt>
+                <dd class="col-sm-8">
+                    <div class="form-control" readonly th:text="${categoria.descripcion}"></div>
+                </dd>
+            </dl>
+            <hr />
+            <form th:action="@{/categorias/delete}" method="post">
+                <input type="hidden" name="id" th:value="${categoria.id}">
+                <div class="text-center">
+                    <button type="submit" class="btn btn-danger">
+                        <i class="fas fa-trash-alt"></i>
+                    </button>
+                    <a th:href="@{/categorias}" class="btn btn-secondary">
+                            <i class="fas fa-arrow-left"></i>
+                        </a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>
