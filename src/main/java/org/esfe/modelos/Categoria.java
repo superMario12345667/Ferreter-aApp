@@ -14,7 +14,7 @@ public class Categoria {
     private String nombre;
     private String descripcion;
 
-    @ManyToMany(mappedBy = "categorias")
+    @OneToMany(mappedBy = "categoria") // Relación OneToMany con Producto
     private Set<Producto> productos = new HashSet<>();
 
     // Getters y setters

@@ -13,7 +13,7 @@
 <body>
 <div layout:fragment="content">
     <div class="card" style="max-width: 500px; margin: 0 auto; margin-top: 20px;">
-        <h1 class="card-title text-center">Detalle de la Categoría</h1>
+        <h1 class="card-title text-center">Editar Categoria</h1>
         <div class="card-body">
             <form th:action="@{/categorias/save}" th:object="${categoria}" method="post">
                 <input type="hidden" th:field="*{id}">
@@ -27,16 +27,17 @@
                 </div>
                 <hr>
                 <div class="text-center">
-
-                    <a th:href="@{/categorias}" class="btn btn-outline-success">
+                    <!-- Botón de guardar -->
+                    <button type="submit" class="btn btn-outline-success">
                         <i class="fas fa-save"></i>
-                    </a>
+                    </button>
 
+                    <!-- Botón de cancelar -->
                     <a th:href="@{/categorias}" class="btn btn-outline-danger">
                         <i class="fas fa-arrow-left"></i>
                     </a>
-
                 </div>
+
             </form>
         </div>
     </div>

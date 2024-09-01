@@ -1,33 +1,75 @@
+<!DOCTYPE html>
 <html lang="en"
       xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="/layouts/_mainLayout">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Font Awesome CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
 <body>
 <div layout:fragment="content">
-    <h1>Detalle del producto</h1>
-    <div>
-        <hr />
-        <dl class="row">
-            <dt class="col-sm-2">ID</dt>
-            <dd class="col-sm-10" th:text="${producto.id}"></dd>
+    <div class="card" style="max-width: 500px; margin: 0 auto; margin-top: 20px;">
+        <h1 class="card-title text-center">Detalle del Producto</h1>
+        <div class="card-body">
+            <div class="form-group">
+                <label for="id">ID</label>
+                <input type="text" class="form-control" th:value="${producto.id}" id="id" readonly>
+            </div>
 
-            <dt class="col-sm-2">Nombre</dt>
-            <dd class="col-sm-10" th:text="${producto.nombre}"></dd>
+            <div class="form-group">
+                <label for="nombre">Nombre</label>
+                <input type="text" class="form-control" th:value="${producto.nombre}" id="nombre" readonly>
+            </div>
 
-            <dt class="col-sm-2">Descripción</dt>
-            <dd class="col-sm-10" th:text="${producto.descripcion}"></dd>
+            <div class="form-group">
+                <label for="descripcion">Descripción</label>
+                <textarea class="form-control" id="descripcion" rows="3" readonly th:text="${producto.descripcion}"></textarea>
+            </div>
 
-            <dt class="col-sm-2">Precio</dt>
-            <dd class="col-sm-10" th:text="${producto.precio}"></dd>
+            <div class="form-group">
+                <label for="precio">Precio</label>
+                <input type="text" class="form-control" th:value="${producto.precio}" id="precio" readonly>
+            </div>
 
-            <dt class="col-sm-2">Stock</dt>
-            <dd class="col-sm-10" th:text="${producto.stock}"></dd>
+            <div class="form-group">
+                <label for="stock">Stock</label>
+                <input type="text" class="form-control" th:value="${producto.stock}" id="stock" readonly>
+            </div>
 
-            <dt class="col-sm-2">ID Categoría</dt>
-            <dd class="col-sm-10" th:text="${producto.idCategoria}"></dd>
-        </dl>
-        <a th:href="@{/productos/edit/{id}(id=${producto.id})}" class="btn btn-outline-info">Editar</a>
-        <a th:href="@{/productos}" class="btn btn-outline-secondary">Regresar</a>
+            <div class="form-group">
+                <label for="categoriaNombre">Categoría</label>
+                <input type="text" class="form-control" th:value="${producto.categoria.nombre}" id="categoriaNombre" readonly>
+            </div>
+
+
+            <!-- Mostrar la imagen actual -->
+            <div class="form-group">
+                <label>Imagen Actual</label>
+                <div class="mb-2">
+                    <img th:if="${producto.imagen != null}"
+                         th:src="'data:image/jpeg;base64,' + ${producto.imagen}"
+                         alt="Imagen del Producto"
+                         style="max-width: 100%; height: auto;"/>
+                    <span th:if="${producto.imagen == null}">No hay imagen disponible</span>
+                </div>
+            </div>
+
+            <hr />
+            <div class="text-center">
+                <!-- Botón de editar -->
+                <a th:href="@{/productos/edit/{id}(id=${producto.id})}" class="btn btn-outline-info">
+                    <i class="fas fa-pencil-alt"></i> Editar
+                </a>
+
+                <!-- Botón de regresar -->
+                <a th:href="@{/productos}" class="btn btn-outline-secondary">
+                    <i class="fas fa-arrow-left"></i> Regresar
+                </a>
+            </div>
+        </div>
     </div>
 </div>
 </body>
