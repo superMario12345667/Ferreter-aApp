@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html lang="en"
       xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
@@ -7,7 +8,7 @@
     <div class="card" style="max-width: 600px; margin: 0 auto; margin-top: 30px;">
         <div class="card-body">
             <h1 class="card-title text-center">Editar Producto</h1>
-            <form th:action="@{/productos/save}" th:object="${producto}" method="post" >
+            <form th:action="@{/productos/save}" th:object="${producto}" method="post">
                 <input type="hidden" th:field="*{id}">
 
                 <div class="form-group">
@@ -31,13 +32,24 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="idCategoria">Categoría</label>
-                    <select class="form-control" th:field="*{idCategoria}" id="idCategoria">
+                    <label for="categoria">Categoría</label>
+                    <select class="form-control" th:field="*{categoria}" id="categoria">
                         <option th:each="categoria : ${categorias}"
                                 th:value="${categoria.id}"
                                 th:text="${categoria.nombre}"
-                                th:selected="${producto.idCategoria == categoria.id}">Categoría</option>
+                                th:selected="${producto.categoria?.id == categoria.id}">Categoría</option>
                     </select>
+                </div>
+
+
+                <!-- Sección para mostrar la imagen actual -->
+                <div class="form-group">
+                    <label>Imagen Actual</label>
+                    <div class="mb-2">
+                        <img th:src="'data:image/jpeg;base64,' + ${producto.imagen}" alt="Imagen del Producto" style="max-width: 100%; height: auto;"/>
+                    </div>
+                    <!-- Botón para cambiar imagen -->
+                    <a th:href="@{/productos/changeImage/{id}(id=${producto.id})}" class="btn btn-warning">Cambiar Imagen</a>
                 </div>
 
                 <hr>

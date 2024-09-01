@@ -19,30 +19,40 @@ public class Producto {
     @NotBlank(message = "la descripcion es requerida")
     private String descripcion;
 
-    private int precio;
+    private double precio;
+
     private int stock;
 
     @Column(columnDefinition = "LONGTEXT")
     private String imagen;
 
-    public int getIdCategoria() {
-        return idCategoria;
-    }
+    //private int idCategoria;
 
-    public void setIdCategoria(int idCategoria) {
-        this.idCategoria = idCategoria;
-    }
+    @ManyToOne
+    @JoinColumn(name = "categoria_id", nullable = false)
+    private Categoria categoria;
 
-    private int idCategoria;
-    @ManyToMany
-    @JoinTable(
-            name = "productos_categorias",
-            joinColumns = @JoinColumn(name = "producto_id"),
-            inverseJoinColumns = @JoinColumn(name = "categoria_id")
-    )
-    private Set<Categoria> categorias = new HashSet<>();
+
 
     // Getters y setters
+
+    public Categoria getCategoria() {
+        return categoria;
+    }
+
+    public void setCategoria(Categoria categoria) {
+        this.categoria = categoria;
+    }
+
+
+
+    public double getPrecio() {
+        return precio;
+    }
+
+    public void setPrecio(double precio) {
+        this.precio = precio;
+    }
 
     public Integer getId() {
         return id;
@@ -68,14 +78,6 @@ public class Producto {
         this.descripcion = descripcion;
     }
 
-    public int getPrecio() {
-        return precio;
-    }
-
-    public void setPrecio(int precio) {
-        this.precio = precio;
-    }
-
     public int getStock() {
         return stock;
     }
@@ -90,13 +92,5 @@ public class Producto {
 
     public void setImagen(String imagen) {
         this.imagen = imagen;
-    }
-
-    public Set<Categoria> getCategorias() {
-        return categorias;
-    }
-
-    public void setCategorias(Set<Categoria> categorias) {
-        this.categorias = categorias;
     }
 }

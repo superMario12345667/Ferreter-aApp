@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="/layouts/_mainLayout">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cambiar Imagen del Producto</title>
+</head>
+
+<div layout:fragment="content">
+    <h1>Cambiar Imagen del Producto</h1>
+    <form th:action="@{/productos/updateImage}" method="post" enctype="multipart/form-data">
+        <input type="hidden" name="id" th:value="${producto.id}"/>
+        <div class="mb-3">
+            <label for="imagen" class="form-label">Nueva Imagen</label>
+            <input type="file" class="form-control" id="imagen" name="imagen" accept="image/*" required/>
+        </div>
+        <button type="submit" class="btn btn-primary">Actualizar Imagen</button>
+        <a th:href="@{/productos}" class="btn btn-secondary">Cancelar</a>
+    </form>
+</div>

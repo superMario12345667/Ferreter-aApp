@@ -51,99 +51,88 @@
 </head>
 
 <div layout:fragment="content">
-    <div class="container" >
-    <div class="row" >
-        <div class= "col-md-6">
-        <h1 class="mb-4">Crear nuevo Producto</h1>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <h1 class="mb-4">Crear nuevo Producto</h1>
 
-        <form th:action="@{/productos/save}" th:object="${producto}" method="post" enctype="multipart/form-data">
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="form-group">
-                        <label for="nombre">Nombre</label>
-                        <input type="text" class="form-control" th:field="*{nombre}" id="nombre" placeholder="Escriba el nombre del producto" required>
-                    </div>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="form-group">
-                        <label for="descripcion">Descripción</label>
-                        <textarea class="form-control" th:field="*{descripcion}" id="descripcion" cols="12" rows="3" required></textarea>
-                    </div>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="form-group">
-                        <label for="precio">Precio</label>
-                        <input type="number" class="form-control" th:field="*{precio}" id="precio" step="0.01">
-                    </div>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="form-group">
-                        <label for="stock">Stock</label>
-                        <input type="number" class="form-control" th:field="*{stock}" id="stock" min="0">
-                    </div>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="form-group">
-                        <label for="idCategoria">Categoría</label>
-                        <select class="form-control" th:field="*{idCategoria}" id="idCategoria">
-                            <option th:each="categoria : ${categorias}"
-                                    th:value="${categoria.id}"
-                                    th:text="${categoria.nombre}">Categoría</option>
-                        </select>
-                    </div>
-                </div>
-            </div>
-
-
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="form-group">
-                        <label for="imagen">Imagen</label>
-                        <input type="file" class="form-control" id="imagen" name="imagen" accept="image/*" required>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-12">
-                <div class="form-group">
-                    <div id="cropContainer" style="display: none; max-height:350px;">
-                        <img id="image" src="" alt="Imagen a recortar">
-                    </div>
-                    <br>
-                    <button type="button" id="cropButton" class="btn btn-success" style="display: none;" >Recortar Imagen</button>
-                </div>
-            </div>
-
-
-            <div class="row">
-                <div class="col-md-12">
-                    <div id="cropContainer" style="display: none;">
-                        <img id="image" src="" alt="Imagen a recortar">
-                        <div class="crop-button-container">
-                            <button type="button" id="cropButton" class="btn btn-success" style="display: none;">Recortar imagen</button>
+                <form th:action="@{/productos/save}" th:object="${producto}" method="post" enctype="multipart/form-data">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="nombre">Nombre</label>
+                                <input type="text" class="form-control" th:field="*{nombre}" id="nombre" placeholder="Escriba el nombre del producto" required>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </div>
 
-            <hr>
-            <div class="form-group">
-                <button type="submit" class="btn btn-primary">Guardar</button>
-                <a th:href="@{/productos}" class="btn btn-secondary">Regresar</a>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="descripcion">Descripción</label>
+                                <textarea class="form-control" th:field="*{descripcion}" id="descripcion" cols="12" rows="3" required></textarea>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="precio">Precio</label>
+                                <input type="number" class="form-control" th:field="*{precio}" id="precio" step="0.01">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="stock">Stock</label>
+                                <input type="number" class="form-control" th:field="*{stock}" id="stock" min="0">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="categoria">Categoría</label>
+                                <select class="form-control" th:field="*{categoria}" id="categoria">
+                                    <option th:each="cat : ${categorias}"
+                                            th:value="${cat.id}"
+                                            th:text="${cat.nombre}">Categoría</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="imagen">Imagen</label>
+                                <input type="file" class="form-control" id="imagen" name="imagen" accept="image/*" required>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <div id="cropContainer" style="display: none; max-height:350px;">
+                                <img id="image" src="" alt="Imagen a recortar">
+                            </div>
+                            <br>
+                            <button type="button" id="cropButton" class="btn btn-success" style="display: none;">Recortar Imagen</button>
+                        </div>
+                    </div>
+
+                    <hr>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary">Guardar</button>
+                        <a th:href="@{/productos}" class="btn btn-secondary">Regresar</a>
+                    </div>
+                </form>
             </div>
-        </form>
+        </div>
     </div>
 
     <!-- Incluir el JS de Cropper -->
@@ -201,6 +190,4 @@
             });
         });
     </script>
-</div>
-    </div>
 </div>
